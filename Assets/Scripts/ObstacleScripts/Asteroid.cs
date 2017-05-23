@@ -33,7 +33,8 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     public void OnBoundsExit()
     {
         Value script = GetComponent<Value>();
-        ScoreController.instance.LoseScore(script.GetValue());
+        if(!GameController.instance.IsGameOver())
+            ScoreController.instance.LoseScore(script.GetValue());
 
         Destroy(gameObject);
     }
@@ -42,6 +43,12 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     {
         //Destroy(other);
         Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
+        PlayerMovement player = other.GetComponent<PlayerMovement>();
+        if(player != null)
+        {
+            GameController.instance.GameOver();
+            
+        }
         Destroy(gameObject);
     }
 
