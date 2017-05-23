@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[CustomEditor(typeof(Timer))]
 public class TimerEditor : Editor
 {
 

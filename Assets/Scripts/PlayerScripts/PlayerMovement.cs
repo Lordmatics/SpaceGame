@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour , IContactDestroyable
 
     public void OnObjectHit(GameObject other)
     {
-        Instantiate(Resources.Load(ExtensionMethods.playerExplosion), transform.position, transform.rotation);
+        Instantiate(Resources.Load("Explosions/" + ExtensionMethods.playerExplosion), transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }
