@@ -42,6 +42,6 @@ public class PlayerTurret : MonoBehaviour
     {
         Vector3 spawnPosition = transform.position + new Vector3(0.0f, 0.0f, turretData.offset);
         //turretData.prefabName;
-        GameObject bullet = (GameObject)Instantiate(Resources.Load("Lasers/" + ExtensionMethods.laserBolt), spawnPosition, Quaternion.identity);
+        GameObject bullet = (GameObject)Instantiate(Resources.Load(WeaponLibrary.laserBolt), spawnPosition, Quaternion.identity);
     }
 }

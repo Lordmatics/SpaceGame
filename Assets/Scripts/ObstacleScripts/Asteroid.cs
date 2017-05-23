@@ -31,7 +31,7 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     public void OnObjectHit(GameObject other)
     {
         //Destroy(other);
-        Instantiate(Resources.Load("Explosions/" + ExtensionMethods.asteroidExplosion), transform.position, transform.rotation);
+        Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
 
         Destroy(gameObject);
     }

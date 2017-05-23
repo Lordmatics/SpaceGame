@@ -29,8 +29,7 @@ public class GameController : MonoBehaviour
             {
                 Vector3 spawnPos = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = new Quaternion();
-                string spawnString = "Obstacles/" + ExtensionMethods.GetRandomAsteroid();
-                Instantiate(Resources.Load(spawnString), spawnPos, spawnRotation);
+                Instantiate(Resources.Load(EnemyLibrary.GetRandomAsteroid()), spawnPos, spawnRotation);
                 yield return new WaitForSeconds(spawnDelay);
             }
             yield return new WaitForSeconds(waveDelay);
