@@ -30,7 +30,7 @@ public struct PlayerMovementData
 
 [AddComponentMenu("Scripts/PlayerScripts/PlayerMovement")]
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour , IContactDestroyable
 {
 
     // Game Components
@@ -62,5 +62,10 @@ public class PlayerMovement : MonoBehaviour
         );
 
         playerRB.rotation = Quaternion.Euler(0.0f, 0.0f, playerRB.velocity.x * -playerData.tilt); 
+    }
+
+    public void OnObjectHit(GameObject other)
+    {
+        Destroy(gameObject);
     }
 }

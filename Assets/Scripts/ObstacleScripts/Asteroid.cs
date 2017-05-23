@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[AddComponentMenu("Scripts/ProjectileScripts/LaserBolt")]
+[AddComponentMenu("Scripts/ObstacleScripts/Asteroid")]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
+[RequireComponent(typeof(AutoRotate))]
 [RequireComponent(typeof(DestroyByContact))]
-public class LaserBolt : MonoBehaviour , ICanExceedBounds, IContactDestroyable
+public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
 {
 
     // Gameobject Components
-    private Rigidbody laserRB;
+    private Rigidbody asteroidRB;
 
     // Custom Data Structures
     public PlayerMovementData movementData = new PlayerMovementData();
 
     void Start()
     {
-        laserRB = GetComponent<Rigidbody>();
+        asteroidRB = GetComponent<Rigidbody>();
 
-        laserRB.velocity = transform.forward * movementData.speed;
+        //asteroidRB.velocity = -transform.forward * movementData.speed;
     }
 
     public void OnBoundsExit()
     {
-        // Replace with pooling
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     public void OnObjectHit(GameObject other)
@@ -33,4 +33,5 @@ public class LaserBolt : MonoBehaviour , ICanExceedBounds, IContactDestroyable
         //Destroy(other);
         Destroy(gameObject);
     }
+
 }
