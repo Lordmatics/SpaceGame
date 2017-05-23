@@ -36,6 +36,9 @@ public class PlayerMovement : MonoBehaviour , IContactDestroyable
     // Game Components
     private Rigidbody playerRB;
 
+    // floats
+    public float explosionVolume = 1.0f;
+    
     // Custom Data Structures
 
     public PlayerMovementData playerData = new PlayerMovementData();

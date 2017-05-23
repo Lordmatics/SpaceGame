@@ -13,6 +13,9 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     // Gameobject Components
     private Rigidbody asteroidRB;
 
+    // floats
+    public float explosionVolume = 1.0f;
+
     // Custom Data Structures
     public PlayerMovementData movementData = new PlayerMovementData();
 
@@ -32,7 +35,6 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     {
         //Destroy(other);
         Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
-
         Destroy(gameObject);
     }
 

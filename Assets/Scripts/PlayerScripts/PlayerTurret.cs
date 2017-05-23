@@ -17,10 +17,16 @@ public struct TurretData
 }
 
 [AddComponentMenu("Scripts/PlayerScripts/PlayerTurret")]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerTurret : MonoBehaviour
 {
 
     // Gameobject Components
+
+    private AudioSource playerAS;
+
+    // floats
+    public float turretVolume = 0.5f;
 
     // Custom Data Structures / Classes
     [SerializeField]
@@ -28,6 +34,11 @@ public class PlayerTurret : MonoBehaviour
 
     [SerializeField]
     private TurretData turretData = new TurretData(1.25f, 0.25f, "PlayerBolt");
+
+    void Start()
+    {
+        playerAS = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -43,5 +54,11 @@ public class PlayerTurret : MonoBehaviour
         Vector3 spawnPosition = transform.position + new Vector3(0.0f, 0.0f, turretData.offset);
         //turretData.prefabName;
         GameObject bullet = (GameObject)Instantiate(Resources.Load(WeaponLibrary.laserBolt), spawnPosition, Quaternion.identity);
+        if (playerAS != null)
+        {
+            playerAS.Play();
+            //AudioClip clip = (AudioClip)Resources.Load(AudioLibrary.playerWeapon);
+            //playerAS.PlayOneShot(clip, turretVolume);
+        }
     }
 }
