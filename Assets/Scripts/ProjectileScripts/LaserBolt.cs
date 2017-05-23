@@ -31,6 +31,7 @@ public class LaserBolt : MonoBehaviour , ICanExceedBounds, IContactDestroyable
     public void OnObjectHit(GameObject other)
     {
         //Destroy(other);
+
         Destroy(gameObject);
     }
 }

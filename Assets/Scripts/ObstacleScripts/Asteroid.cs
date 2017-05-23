@@ -20,7 +20,7 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     {
         asteroidRB = GetComponent<Rigidbody>();
 
-        //asteroidRB.velocity = -transform.forward * movementData.speed;
+        asteroidRB.velocity = -transform.forward * movementData.speed;
     }
 
     public void OnBoundsExit()
@@ -31,6 +31,8 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     public void OnObjectHit(GameObject other)
     {
         //Destroy(other);
+        Instantiate(Resources.Load(ExtensionMethods.asteroidExplosion), transform.position, transform.rotation);
+
         Destroy(gameObject);
     }
 

@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour , IContactDestroyable
     private Rigidbody playerRB;
 
     // Custom Data Structures
+
     public PlayerMovementData playerData = new PlayerMovementData();
 
     public GameBoundaries boundaries = new GameBoundaries();
@@ -66,6 +67,7 @@ public class PlayerMovement : MonoBehaviour , IContactDestroyable
 
     public void OnObjectHit(GameObject other)
     {
+        Instantiate(Resources.Load(ExtensionMethods.playerExplosion), transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }
