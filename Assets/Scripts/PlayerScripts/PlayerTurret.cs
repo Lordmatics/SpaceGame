@@ -5,14 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public struct TurretData
 {
-    public float offset, fireRate;
-    public string prefabName;
+    public float offset, fireRate, delay;
 
-    public TurretData(float offst = 1.25f, float fireRte = 0.25f, string nam = "PlayerBolt")
+    public TurretData(float offst = 1.25f, float fireRte = 0.25f, float wait = 0.25f)
     {
         offset = offst;
         fireRate = fireRte;
-        prefabName = nam;
+        delay = wait;
     }
 }
 
@@ -33,7 +32,7 @@ public class PlayerTurret : MonoBehaviour
     private Timer shootingTimer = new Timer();
 
     [SerializeField]
-    private TurretData turretData = new TurretData(1.25f, 0.25f, "PlayerBolt");
+    private TurretData turretData = new TurretData(1.25f, 0.25f);
 
     void Start()
     {
@@ -57,8 +56,6 @@ public class PlayerTurret : MonoBehaviour
         if (playerAS != null)
         {
             playerAS.Play();
-            //AudioClip clip = (AudioClip)Resources.Load(AudioLibrary.playerWeapon);
-            //playerAS.PlayOneShot(clip, turretVolume);
         }
     }
 }
