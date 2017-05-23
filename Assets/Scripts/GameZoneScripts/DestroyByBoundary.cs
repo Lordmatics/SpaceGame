@@ -10,6 +10,7 @@ public class DestroyByBoundary : MonoBehaviour
         // This assumes, only one version of this interface lies on any given object
         // - Which is true for this game
         ICanExceedBounds temp = other.GetComponent<ICanExceedBounds>();
-        temp.OnBoundsExit();
+        if(temp != null)
+            temp.OnBoundsExit();
     }
 }

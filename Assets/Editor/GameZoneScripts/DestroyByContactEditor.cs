@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(DestroyByBoundary))]
-public class DestroyByBoundaryEditor : Editor
+[CustomEditor(typeof(DestroyByContact))]
+public class DestroyByContactEditor : Editor
 {
 
     public override void OnInspectorGUI()
     {
-        EditorGUILayout.HelpBox("This script checks for out of bounds exceptions", MessageType.Info);
+        EditorGUILayout.HelpBox("This script checks for contact destruction", MessageType.Info);
 
         base.OnInspectorGUI();
     }

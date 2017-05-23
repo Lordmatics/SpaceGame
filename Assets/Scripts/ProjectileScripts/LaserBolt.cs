@@ -5,7 +5,7 @@ using UnityEngine;
 [AddComponentMenu("Scripts/ProjectileScripts/LaserBolt")]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-public class LaserBolt : MonoBehaviour , ICanExceedBounds
+public class LaserBolt : MonoBehaviour , ICanExceedBounds, IContactDestroyable
 {
 
     // Gameobject Components
@@ -25,5 +25,11 @@ public class LaserBolt : MonoBehaviour , ICanExceedBounds
     {
         // Replace with pooling
         Destroy(this.gameObject);
+    }
+
+    public void OnObjectHit(GameObject other)
+    {
+        Destroy(other);
+        Destroy(gameObject);
     }
 }
