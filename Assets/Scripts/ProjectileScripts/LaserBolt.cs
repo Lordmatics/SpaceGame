@@ -5,7 +5,7 @@ using UnityEngine;
 [AddComponentMenu("Scripts/ProjectileScripts/LaserBolt")]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
-public class LaserBolt : MonoBehaviour
+public class LaserBolt : MonoBehaviour , ICanExceedBounds
 {
 
     // Gameobject Components
@@ -19,5 +19,11 @@ public class LaserBolt : MonoBehaviour
         laserRB = GetComponent<Rigidbody>();
 
         laserRB.velocity = transform.forward * movementData.speed;
+    }
+
+    public void OnBoundsExit()
+    {
+        // Replace with pooling
+        Destroy(this.gameObject);
     }
 }
