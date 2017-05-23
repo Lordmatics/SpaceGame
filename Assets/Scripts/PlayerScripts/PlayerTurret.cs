@@ -2,33 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct TurretData
+{
+    public float offset, fireRate;
+    public string prefabName;
+
+    public TurretData(float offst = 1.25f, float fireRte = 0.25f, string nam = "PlayerBolt")
+    {
+        offset = offst;
+        fireRate = fireRte;
+        prefabName = nam;
+    }
+}
+
 [AddComponentMenu("Scripts/PlayerScripts/PlayerTurret")]
 public class PlayerTurret : MonoBehaviour
 {
 
     // Gameobject Components
 
-    // floats
-    public float offset = 1.25f;
-    public string prefabName = "PlayerBolt";
+    // Custom Data Structures / Classes
+    [SerializeField]
+    private Timer shootingTimer = new Timer();
+
+    [SerializeField]
+    private TurretData turretData = new TurretData(1.25f, 0.25f, "PlayerBolt");
 
     void Update()
     {
-        //if(Input.GetKeyUp(KeyCode.Space))
-        //{
-        //    FireShot();
-        //}
-
-        if(Input.GetButton("Fire1") && Time.time > nextFire)
+        if (Input.GetButton("Fire1") && shootingTimer.GetElapsedTime() > turretData.fireRate)
         {
-            nextFire = Time.time + fireRate;
+            shootingTimer.ResetTimer();
             FireShot();
         }
     }
 
     void FireShot()
     {
-        Vector3 spawnPosition = transform.position + new Vector3(0.0f, 0.0f, offset);
-        GameObject bullet = (GameObject)Instantiate(Resources.Load(prefabName), spawnPosition, Quaternion.identity);
+        Vector3 spawnPosition = transform.position + new Vector3(0.0f, 0.0f, turretData.offset);
+        GameObject bullet = (GameObject)Instantiate(Resources.Load(turretData.prefabName), spawnPosition, Quaternion.identity);
     }
 }
