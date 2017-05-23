@@ -31,6 +31,12 @@ public class LaserBolt : MonoBehaviour , ICanExceedBounds, IContactDestroyable
     public void OnObjectHit(GameObject other)
     {
         //Destroy(other);
+        Value script = other.GetComponent<Value>();
+        if(script != null)
+        {
+            ScoreController.instance.GainScore(script.GetValue());
+        }
+        // Maybe add durability script and make tankier obstacles
 
         Destroy(gameObject);
     }

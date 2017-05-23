@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(AutoRotate))]
 [RequireComponent(typeof(DestroyByContact))]
+[RequireComponent(typeof(Value))]
 public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
 {
 
@@ -15,6 +16,9 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
 
     // floats
     public float explosionVolume = 1.0f;
+
+    // ints
+    public int asteroidValue = 10;
 
     // Custom Data Structures
     public PlayerMovementData movementData = new PlayerMovementData();
@@ -28,6 +32,9 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
 
     public void OnBoundsExit()
     {
+        Value script = GetComponent<Value>();
+        ScoreController.instance.LoseScore(script.GetValue());
+
         Destroy(gameObject);
     }
 

@@ -12,6 +12,8 @@ public class DestroyByContact : MonoBehaviour
         // - Which is true for this game
         IContactDestroyable temp = other.GetComponent<IContactDestroyable>();
         if(temp != null)
-            temp.OnObjectHit(other.gameObject);
+        {
+            temp.OnObjectHit(gameObject);
+        }
     }
 }
