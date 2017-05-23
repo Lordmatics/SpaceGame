@@ -42,14 +42,26 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     public void OnObjectHit(GameObject other)
     {
         //Destroy(other);
-        Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
+        // If Asteroid hits player
+        // If Asteroid hits player laser
         PlayerMovement player = other.GetComponent<PlayerMovement>();
-        if(player != null)
+        LaserBolt laserBolt = other.GetComponent<LaserBolt>();
+
+        if (player != null)
         {
             GameController.instance.GameOver();
-            
+            Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+        else if(laserBolt != null)
+        {
+            if(laserBolt.type == LaserBolt.FriendOrFoe.Friendly)
+            {
+                Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
+        }
+
     }
 
 }

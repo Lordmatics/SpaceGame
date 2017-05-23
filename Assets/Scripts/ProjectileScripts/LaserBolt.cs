@@ -8,6 +8,13 @@ using UnityEngine;
 [RequireComponent(typeof(DestroyByContact))]
 public class LaserBolt : MonoBehaviour , ICanExceedBounds, IContactDestroyable
 {
+    public enum FriendOrFoe
+    {
+        Friendly,
+        Foe
+    }
+
+    public FriendOrFoe type;
 
     // Gameobject Components
     private Rigidbody laserRB;
@@ -31,13 +38,33 @@ public class LaserBolt : MonoBehaviour , ICanExceedBounds, IContactDestroyable
     public void OnObjectHit(GameObject other)
     {
         //Destroy(other);
-        Value script = other.GetComponent<Value>();
-        if(script != null)
+        // Shot by Enemy
+        if(type == FriendOrFoe.Foe)
         {
-            ScoreController.instance.GainScore(script.GetValue());
+            //Only Destroy 
+            // - Out of Bounds
+            // - Hits Player
+            PlayerMovement player = other.GetComponent<PlayerMovement>();
+            if (player != null)
+            {
+                GameController.instance.GameOver();
+                Destroy(gameObject);
+            }
         }
+        // Shot by Player
+        else
+        {
+            // Destroy on impact - Except on Bullets
+            Value script = other.GetComponent<Value>();
+            if (script != null)
+            {
+                ScoreController.instance.GainScore(script.GetValue());
+            }
+            Destroy(gameObject);
+
+        }
+
         // Maybe add durability script and make tankier obstacles
 
-        Destroy(gameObject);
     }
 }

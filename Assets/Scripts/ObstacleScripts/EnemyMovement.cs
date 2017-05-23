@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : MonoBehaviour, ICanExceedBounds, IContactDestroyable
 {
 
     public float dodge;
@@ -54,5 +54,37 @@ public class EnemyMovement : MonoBehaviour
         );
 
         rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -movementData.tilt);
+    }
+
+    public void OnBoundsExit()
+    {
+        Value script = GetComponent<Value>();
+        if (!GameController.instance.IsGameOver())
+            ScoreController.instance.LoseScore(script.GetValue());
+
+        Destroy(gameObject);
+    }
+
+    public void OnObjectHit(GameObject other)
+    {
+        //Destroy(other);
+        PlayerMovement player = other.GetComponent<PlayerMovement>();
+        LaserBolt laser = other.GetComponent<LaserBolt>();
+
+        if (player != null)
+        {
+            GameController.instance.GameOver();
+            Instantiate(Resources.Load(ParticleLibrary.enemyExplosion), transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
+        else if(laser != null)
+        {
+            if(laser.type == LaserBolt.FriendOrFoe.Friendly)
+            {
+                Instantiate(Resources.Load(ParticleLibrary.enemyExplosion), transform.position, transform.rotation);
+                Destroy(gameObject);
+            }
+        }
+
     }
 }

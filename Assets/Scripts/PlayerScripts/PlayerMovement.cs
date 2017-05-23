@@ -52,10 +52,14 @@ public class PlayerMovement : MonoBehaviour , IContactDestroyable
 
     void FixedUpdate()
     {
-        float horizontalMovement = Input.GetAxis("Horizontal");
-        float verticalMovement = Input.GetAxis("Vertical");
+        //float horizontalMovement = Input.GetAxis("Horizontal");
+        //float verticalMovement = Input.GetAxis("Vertical");
 
-        Vector3 movementVector = new Vector3(horizontalMovement, 0.0f, verticalMovement);
+        //Vector3 movementVector = new Vector3(horizontalMovement, 0.0f, verticalMovement);
+
+        Vector3 acceleration = Input.acceleration;
+
+        Vector3 movementVector = new Vector3(acceleration.x, 0.0f, acceleration.y);
         playerRB.velocity = movementVector * playerData.speed;
 
         playerRB.position = new Vector3
