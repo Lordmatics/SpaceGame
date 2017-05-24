@@ -28,6 +28,10 @@ public class GameController : MonoBehaviour
     public Button quitGameButton;
     public Button restartButton;
 
+    public Button startGameButton;
+
+    public Text levelText;
+
     public static GameController instance;
 
     void Awake()
@@ -43,8 +47,16 @@ public class GameController : MonoBehaviour
         restartButton.gameObject.SetActive(false);
         quitGameButton.gameObject.SetActive(false);
 
+        startGameButton.gameObject.SetActive(true);
 
+    }
+
+    public void StartGame()
+    {
         StartCoroutine(SpawnWaves());
+
+        startGameButton.gameObject.SetActive(false);
+
     }
 
     void Update()

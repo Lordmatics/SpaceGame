@@ -17,9 +17,6 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     // floats
     public float explosionVolume = 1.0f;
 
-    // ints
-    public int asteroidValue = 10;
-
     // Custom Data Structures
     public PlayerMovementData movementData = new PlayerMovementData();
 

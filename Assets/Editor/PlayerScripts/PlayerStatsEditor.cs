@@ -11,13 +11,15 @@ public class PlayerStatsEditor : Editor
     {
         EditorGUILayout.HelpBox("This script contains the players level info", MessageType.Info);
 
-        //base.OnInspectorGUI();
+        base.OnInspectorGUI();
 
-        PlayerStats script = (PlayerStats)target;
-        if(script != null)
-        {
-            script.experience = EditorGUILayout.IntField("Experience", script.experience);
-            EditorGUILayout.LabelField("Level", script.level.ToString());
-        }
+        //PlayerStats script = (PlayerStats)target;
+        //if(script != null)
+        //{
+        //    script.Experience = EditorGUILayout.IntField("Experience", script.Experience);
+        //    EditorGUILayout.LabelField("Level", script.level.ToString());
+
+        //    //script.levelTable = (Dictionary<int,int>)EditorGUILayout.ObjectField("LevelTable", script.levelTable, typeof(Dictionary<int,int>), true);
+        //}
     }
 }
