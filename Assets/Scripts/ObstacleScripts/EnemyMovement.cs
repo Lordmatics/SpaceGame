@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Durability))]
 public class EnemyMovement : MonoBehaviour, ICanExceedBounds, IContactDestroyable
 {
 
@@ -19,13 +20,15 @@ public class EnemyMovement : MonoBehaviour, ICanExceedBounds, IContactDestroyabl
     // Custom Data Structures
     public PlayerMovementData movementData = new PlayerMovementData();
 
-    bool bIsDead = false;
+    public Durability healthScript;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
         rb.velocity = -transform.forward * movementData.speed;
+
+        healthScript = GetComponent<Durability>();
 
         currentSpeed = rb.velocity.z;
         StartCoroutine(Evade());
@@ -70,7 +73,7 @@ public class EnemyMovement : MonoBehaviour, ICanExceedBounds, IContactDestroyabl
     public void OnObjectHit(GameObject other)
     {
         //Destroy(other);
-        PlayerMovement player = other.GetComponent<PlayerMovement>();
+        PlayerTurret player = other.GetComponent<PlayerTurret>();
         LaserBolt laser = other.GetComponent<LaserBolt>();
 
         if (player != null)
@@ -81,14 +84,20 @@ public class EnemyMovement : MonoBehaviour, ICanExceedBounds, IContactDestroyabl
         }
         else if(laser != null)
         {
-            if(laser.type == LaserBolt.FriendOrFoe.Friendly && !bIsDead)
+            if(laser.type == LaserBolt.FriendOrFoe.Friendly && !healthScript.bIsDead)
             {
-                bIsDead = true;
-                Instantiate(Resources.Load(ParticleLibrary.enemyExplosion), transform.position, transform.rotation);
-                // Done in laser class
-                //Value script = GetComponent<Value>();
-                //ExpController.instance.GainExperience(script.ExpValue);
-                Destroy(gameObject);
+                if(healthScript.TakeDamage(player.GetTurretData().power))
+                {
+                    Instantiate(Resources.Load(ParticleLibrary.enemyExplosion), transform.position, transform.rotation);
+                    // Done in laser class
+                    //Value script = GetComponent<Value>();
+                    //ExpController.instance.GainExperience(script.ExpValue);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    // Play hit sound
+                }
             }
         }
 

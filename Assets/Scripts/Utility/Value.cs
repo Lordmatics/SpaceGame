@@ -28,12 +28,18 @@ public class Value : MonoBehaviour
 
     public void BindToTime()
     {
+        Durability health = GetComponent<Durability>();
+
         float val = TimeController.instance.customSeconds / TimeController.instance.refreshRate;
         int flooredVal = Mathf.FloorToInt(val);
 
         int modifier = flooredVal * 2;
 
         expValue += modifier;
+        if(health != null)
+        {
+            health.hitPoints += flooredVal;
+        }
     }
 
 }

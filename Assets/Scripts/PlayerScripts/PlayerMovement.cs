@@ -30,6 +30,7 @@ public struct PlayerMovementData
 
 [AddComponentMenu("Scripts/PlayerScripts/PlayerMovement")]
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Durability))]
 public class PlayerMovement : MonoBehaviour , IContactDestroyable
 {
 
@@ -49,9 +50,13 @@ public class PlayerMovement : MonoBehaviour , IContactDestroyable
 
     public AndroidTouchPad touchPad;
 
+    public Durability healthScript;
+
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
+
+        healthScript = GetComponent<Durability>();
 
         touchPad = GameObject.FindObjectOfType<AndroidTouchPad>();
 #if UNITY_ANDROID
@@ -101,8 +106,11 @@ public class PlayerMovement : MonoBehaviour , IContactDestroyable
         playerRB.rotation = Quaternion.Euler(0.0f, 0.0f, playerRB.velocity.x * -playerData.tilt); 
     }
 
+    // Player hits anything - he dies
+    // CHANGE TO LOSE LIFE SYSTEM
     public void OnObjectHit(GameObject other)
     {
+        
         Instantiate(Resources.Load(ParticleLibrary.playerExplosion), transform.position, transform.rotation);
         Destroy(gameObject);
     }

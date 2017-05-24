@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(AutoRotate))]
 [RequireComponent(typeof(DestroyByContact))]
 [RequireComponent(typeof(Value))]
+[RequireComponent(typeof(Durability))]
 public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
 {
 
@@ -20,11 +21,13 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     // Custom Data Structures
     public PlayerMovementData movementData = new PlayerMovementData();
 
-    bool bIsDead = false;
+    public Durability healthScript;
 
     void Start()
     {
         asteroidRB = GetComponent<Rigidbody>();
+
+        healthScript = GetComponent<Durability>();
 
         asteroidRB.velocity = -transform.forward * movementData.speed;
     }
@@ -43,7 +46,7 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
         //Destroy(other);
         // If Asteroid hits player
         // If Asteroid hits player laser
-        PlayerMovement player = other.GetComponent<PlayerMovement>();
+        PlayerTurret player = other.GetComponent<PlayerTurret>();
         LaserBolt laserBolt = other.GetComponent<LaserBolt>();
 
         if (player != null)
@@ -54,13 +57,19 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
         }
         else if(laserBolt != null)
         {
-            if(laserBolt.type == LaserBolt.FriendOrFoe.Friendly && !bIsDead)
+            if(laserBolt.type == LaserBolt.FriendOrFoe.Friendly && !healthScript.bIsDead)
             {
-                bIsDead = true;
-                //Value script = GetComponent<Value>();
-                //ExpController.instance.GainExperience(script.ExpValue);
-                Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
-                Destroy(gameObject);
+                if(healthScript.TakeDamage(player.GetTurretData().power))
+                {
+                    //Value script = GetComponent<Value>();
+                    //ExpController.instance.GainExperience(script.ExpValue);
+                    Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    // Play Take damage sound
+                }
             }
         }
 
