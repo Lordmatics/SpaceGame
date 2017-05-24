@@ -51,15 +51,18 @@ public class GameController : MonoBehaviour
     {
         if(bRestart)
         {
-#if UNITY_ANDROID
             restartButton.gameObject.SetActive(true);
+            quitGameButton.gameObject.SetActive(true);
+
+#if UNITY_ANDROID
+            //restartButton.gameObject.SetActive(true);
 #else
             if (Input.GetKeyDown(KeyCode.R))
             {
                 RestartScene();
             }
 #endif
-            quitGameButton.gameObject.SetActive(true);
+
         }
     }
 
