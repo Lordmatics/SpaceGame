@@ -33,6 +33,8 @@ public class GameController : MonoBehaviour
     public Text levelText;
     public Text timeText;
 
+    public Canvas shopCanvas;
+
     public static GameController instance;
 
     void Awake()
@@ -49,6 +51,8 @@ public class GameController : MonoBehaviour
         quitGameButton.gameObject.SetActive(false);
 
         startGameButton.gameObject.SetActive(true);
+
+        shopCanvas.enabled = false;
 
         ExpController.instance.UpdateLevel();
     }
@@ -133,6 +137,10 @@ public class GameController : MonoBehaviour
     {
         gameoverText.text = "Game Over!";
         bGameOver = true;
+        shopCanvas.enabled = true;
+        int amountOfPoints = ExpController.instance.Experience;
+        ShopController.instance.GainPoints(amountOfPoints);
+
         TimeController.instance.bTimerTicking = false;
     }
 }

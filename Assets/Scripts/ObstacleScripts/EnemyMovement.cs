@@ -19,6 +19,8 @@ public class EnemyMovement : MonoBehaviour, ICanExceedBounds, IContactDestroyabl
     // Custom Data Structures
     public PlayerMovementData movementData = new PlayerMovementData();
 
+    bool bIsDead = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -79,8 +81,9 @@ public class EnemyMovement : MonoBehaviour, ICanExceedBounds, IContactDestroyabl
         }
         else if(laser != null)
         {
-            if(laser.type == LaserBolt.FriendOrFoe.Friendly)
+            if(laser.type == LaserBolt.FriendOrFoe.Friendly && !bIsDead)
             {
+                bIsDead = true;
                 Instantiate(Resources.Load(ParticleLibrary.enemyExplosion), transform.position, transform.rotation);
                 // Done in laser class
                 //Value script = GetComponent<Value>();

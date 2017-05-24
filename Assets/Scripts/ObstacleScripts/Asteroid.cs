@@ -20,6 +20,8 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
     // Custom Data Structures
     public PlayerMovementData movementData = new PlayerMovementData();
 
+    bool bIsDead = false;
+
     void Start()
     {
         asteroidRB = GetComponent<Rigidbody>();
@@ -52,8 +54,9 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
         }
         else if(laserBolt != null)
         {
-            if(laserBolt.type == LaserBolt.FriendOrFoe.Friendly)
+            if(laserBolt.type == LaserBolt.FriendOrFoe.Friendly && !bIsDead)
             {
+                bIsDead = true;
                 //Value script = GetComponent<Value>();
                 //ExpController.instance.GainExperience(script.ExpValue);
                 Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
