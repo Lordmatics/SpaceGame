@@ -19,6 +19,11 @@ public class Timer
         lastTimeRecorded = Time.time;
     }
 
+    public void ResetToZero()
+    {
+        lastTimeRecorded = 0.0f;
+    }
+
     // Subtract custom timer from game time to return difference
     public float GetElapsedTime()
     {

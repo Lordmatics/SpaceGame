@@ -8,8 +8,32 @@ public class Value : MonoBehaviour
     [SerializeField]
     private int scoreValue = 1;
 
+    [SerializeField]
+    private int expValue = 1;
+
     public int GetValue()
     {
         return scoreValue;
     }
+
+    public int GetEXPWorth()
+    {
+        return expValue;
+    }
+
+    public void SetEXPWorth(int newWorth)
+    {
+        expValue = newWorth;
+    }
+
+    public void BindToTime()
+    {
+        float val = TimeController.instance.customSeconds / TimeController.instance.refreshRate;
+        int flooredVal = Mathf.FloorToInt(val);
+
+        int modifier = flooredVal * 2;
+
+        expValue += modifier;
+    }
+
 }

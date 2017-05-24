@@ -82,6 +82,9 @@ public class EnemyMovement : MonoBehaviour, ICanExceedBounds, IContactDestroyabl
             if(laser.type == LaserBolt.FriendOrFoe.Friendly)
             {
                 Instantiate(Resources.Load(ParticleLibrary.enemyExplosion), transform.position, transform.rotation);
+                // Done in laser class
+                //Value script = GetComponent<Value>();
+                //ExpController.instance.GainExperience(script.ExpValue);
                 Destroy(gameObject);
             }
         }

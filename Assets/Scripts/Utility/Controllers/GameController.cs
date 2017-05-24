@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
     public Button startGameButton;
 
     public Text levelText;
+    public Text timeText;
 
     public static GameController instance;
 
@@ -49,6 +50,7 @@ public class GameController : MonoBehaviour
 
         startGameButton.gameObject.SetActive(true);
 
+        ExpController.instance.UpdateLevel();
     }
 
     public void StartGame()
@@ -97,7 +99,15 @@ public class GameController : MonoBehaviour
             {
                 Vector3 spawnPos = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
                 Quaternion spawnRotation = new Quaternion();
-                Instantiate(Resources.Load(EnemyLibrary.GetRandomAsteroid()), spawnPos, spawnRotation);
+                GameObject GO = (GameObject)Instantiate(Resources.Load(EnemyLibrary.GetRandomAsteroid()), spawnPos, spawnRotation);
+                if(GO != null)
+                {
+                    Value script = GO.GetComponent<Value>();
+                    if(script != null)
+                    {
+                        script.BindToTime();
+                    }
+                }
                 yield return new WaitForSeconds(spawnDelay);
             }
             yield return new WaitForSeconds(waveDelay);
@@ -123,6 +133,7 @@ public class GameController : MonoBehaviour
     {
         gameoverText.text = "Game Over!";
         bGameOver = true;
+        TimeController.instance.bTimerTicking = false;
     }
 }
 

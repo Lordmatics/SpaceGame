@@ -59,6 +59,7 @@ public class LaserBolt : MonoBehaviour , ICanExceedBounds, IContactDestroyable
             if (script != null)
             {
                 ScoreController.instance.GainScore(script.GetValue());
+                ExpController.instance.GainExperience(script.GetEXPWorth());
             }
             Destroy(gameObject);
 

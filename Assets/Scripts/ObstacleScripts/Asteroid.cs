@@ -54,6 +54,8 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
         {
             if(laserBolt.type == LaserBolt.FriendOrFoe.Friendly)
             {
+                //Value script = GetComponent<Value>();
+                //ExpController.instance.GainExperience(script.ExpValue);
                 Instantiate(Resources.Load(ParticleLibrary.asteroidExplosion), transform.position, transform.rotation);
                 Destroy(gameObject);
             }

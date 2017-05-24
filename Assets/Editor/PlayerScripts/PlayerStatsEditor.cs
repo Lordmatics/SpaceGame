@@ -11,10 +11,10 @@ public class PlayerStatsEditor : Editor
     {
         EditorGUILayout.HelpBox("This script contains the players level info", MessageType.Info);
 
-        base.OnInspectorGUI();
+        //base.OnInspectorGUI();
 
         //PlayerStats script = (PlayerStats)target;
-        //if(script != null)
+        //if (script != null)
         //{
         //    script.Experience = EditorGUILayout.IntField("Experience", script.Experience);
         //    EditorGUILayout.LabelField("Level", script.level.ToString());
