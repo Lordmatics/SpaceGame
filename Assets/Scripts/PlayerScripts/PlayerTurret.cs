@@ -25,7 +25,7 @@ public class PlayerTurret : MonoBehaviour
     private AudioSource playerAS;
 
     // floats
-    public float turretVolume = 0.5f;
+    public float turretVolume = 0.05f;
 
     // Custom Data Structures / Classes
     [SerializeField]
@@ -34,17 +34,34 @@ public class PlayerTurret : MonoBehaviour
     [SerializeField]
     private TurretData turretData = new TurretData(1.25f, 0.25f);
 
+    public AndroidFireZone fireZone;
+
     void Start()
     {
         playerAS = GetComponent<AudioSource>();
+        playerAS.volume = turretVolume;
+
+        fireZone = GameObject.FindObjectOfType<AndroidFireZone>();
     }
 
     void Update()
     {
-        if (Input.GetButton("Fire1") && shootingTimer.GetElapsedTime() > turretData.fireRate)
+        if (shootingTimer.GetElapsedTime() > turretData.fireRate)
         {
-            shootingTimer.ResetTimer();
-            FireShot();
+#if UNITY_ANDROID
+            if(fireZone.CanFire())
+            {
+                shootingTimer.ResetTimer();
+                FireShot();
+            }
+#else
+            if(Input.GetButton("Fire1"))
+            {
+                shootingTimer.ResetTimer();
+                FireShot();
+            }
+#endif
+
         }
     }
 

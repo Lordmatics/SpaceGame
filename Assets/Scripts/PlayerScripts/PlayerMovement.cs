@@ -45,23 +45,52 @@ public class PlayerMovement : MonoBehaviour , IContactDestroyable
 
     public GameBoundaries boundaries = new GameBoundaries();
 
+    private Quaternion calibrationQuaternion;
+
+    public AndroidTouchPad touchPad;
+
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
+
+        touchPad = GameObject.FindObjectOfType<AndroidTouchPad>();
+#if UNITY_ANDROID
+        CalibrateAccelerometer();
+#endif
+    }
+
+    void CalibrateAccelerometer()
+    {
+        Vector3 accelerationSnapshot = Input.acceleration;
+        Quaternion rotateQuaternion = Quaternion.FromToRotation(new Vector3(0.0f, 0.0f, -1.0f), accelerationSnapshot);
+        calibrationQuaternion = Quaternion.Inverse(rotateQuaternion);
+    }
+
+    Vector3 FixAcceleration(Vector3 acceleration)
+    {
+        Vector3 fixedAcceleration = calibrationQuaternion * acceleration;
+        return fixedAcceleration;
     }
 
     void FixedUpdate()
     {
-        //float horizontalMovement = Input.GetAxis("Horizontal");
-        //float verticalMovement = Input.GetAxis("Vertical");
 
-        //Vector3 movementVector = new Vector3(horizontalMovement, 0.0f, verticalMovement);
 
-        Vector3 acceleration = Input.acceleration;
+#if UNITY_ANDROID
+        //Vector3 accelerationRaw = Input.acceleration;
+        //Vector3 acceleration = FixAcceleration(accelerationRaw);
+        //Vector3 movementVector = new Vector3(acceleration.x, 0.0f, acceleration.y);
 
-        Vector3 movementVector = new Vector3(acceleration.x, 0.0f, acceleration.y);
+        Vector2 direction = touchPad.GetDirection();
+        Vector3 movementVector = new Vector3(direction.x, 0.0f, direction.y);
+#else
+        float horizontalMovement = Input.GetAxis("Horizontal");
+        float verticalMovement = Input.GetAxis("Vertical");
+
+        Vector3 movementVector = new Vector3(horizontalMovement, 0.0f, verticalMovement);
+#endif
+
         playerRB.velocity = movementVector * playerData.speed;
-
         playerRB.position = new Vector3
         (
             Mathf.Clamp(playerRB.position.x,boundaries.minX,boundaries.maxX),

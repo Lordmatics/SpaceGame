@@ -22,8 +22,11 @@ public class GameController : MonoBehaviour
     private bool bRestart = false;
 
     // Texts
-    public Text restartText;
+    //public Text restartText;
     public Text gameoverText;
+
+    public Button quitGameButton;
+    public Button restartButton;
 
     public static GameController instance;
 
@@ -34,8 +37,12 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        restartText.text = "";
+        //restartText.text = "";
         gameoverText.text = "";
+
+        restartButton.gameObject.SetActive(false);
+        quitGameButton.gameObject.SetActive(false);
+
 
         StartCoroutine(SpawnWaves());
     }
@@ -44,11 +51,26 @@ public class GameController : MonoBehaviour
     {
         if(bRestart)
         {
-            if(Input.GetKeyDown(KeyCode.R))
+#if UNITY_ANDROID
+            restartButton.gameObject.SetActive(true);
+#else
+            if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                RestartScene();
             }
+#endif
+            quitGameButton.gameObject.SetActive(true);
         }
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 
     IEnumerator SpawnWaves()
@@ -67,7 +89,10 @@ public class GameController : MonoBehaviour
 
             if(bGameOver)
             {
-                restartText.text = "Press 'r' for Restart";
+#if UNITY_ANDROID
+#else
+                //restartText.text = "Press 'r' for Restart";
+#endif
                 bRestart = true;
                 break;
             }

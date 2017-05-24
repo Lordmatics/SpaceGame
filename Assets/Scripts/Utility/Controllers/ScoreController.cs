@@ -8,6 +8,9 @@ public class ScoreController : MonoBehaviour
     public Text scoreText;
     public int score;
 
+    public Text hiscoreText;
+    public int hiscore;
+
     public int scoreMin = 0;
     public int scoreMax = 9999;
 
@@ -20,6 +23,16 @@ public class ScoreController : MonoBehaviour
 
     void Start()
     {
+        LoadHiScore();
+    }
+
+    public void LoadHiScore()
+    {
+        if(PlayerPrefs.HasKey("HiScore"))
+        {
+            int temp = PlayerPrefs.GetInt("HiScore");
+            hiscore = temp;
+        }
         UpdateScore();
     }
 
@@ -40,5 +53,11 @@ public class ScoreController : MonoBehaviour
     void UpdateScore()
     {
         scoreText.text = "Score: " + score.ToString();
+        if(score > hiscore)
+        {
+            hiscore = score;
+            PlayerPrefs.SetInt("HiScore", hiscore);
+        }
+        hiscoreText.text = "Hi-Score: " + hiscore.ToString();
     }
 }
