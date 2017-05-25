@@ -33,7 +33,7 @@ public class Value : MonoBehaviour
         float val = TimeController.instance.customSeconds / TimeController.instance.refreshRate;
         int flooredVal = Mathf.FloorToInt(val);
 
-        int modifier = flooredVal * 2;
+        int modifier = flooredVal * 4;
 
         expValue += modifier;
         if(health != null)
