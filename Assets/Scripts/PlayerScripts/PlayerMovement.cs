@@ -110,7 +110,15 @@ public class PlayerMovement : MonoBehaviour , IContactDestroyable
     // CHANGE TO LOSE LIFE SYSTEM
     public void OnObjectHit(GameObject other)
     {
-        
+
+        LaserBolt laser = other.GetComponent<LaserBolt>();
+        if(laser != null)
+        {
+            if(laser.type == LaserBolt.FriendOrFoe.Friendly)
+            {
+                return;
+            }
+        }
         Instantiate(Resources.Load(ParticleLibrary.playerExplosion), transform.position, transform.rotation);
         Destroy(gameObject);
     }

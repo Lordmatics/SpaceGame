@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
         quitGameButton.gameObject.SetActive(false);
 
         startGameButton.gameObject.SetActive(true);
-
+        inputField.gameObject.SetActive(true);
         shopCanvas.enabled = false;
 
         ExpController.instance.UpdateLevel();
@@ -62,7 +62,8 @@ public class GameController : MonoBehaviour
         StartCoroutine(SpawnWaves());
 
         startGameButton.gameObject.SetActive(false);
-
+        if(inputField != null)
+            inputField.gameObject.SetActive(false);
     }
 
     void Update()
@@ -75,7 +76,7 @@ public class GameController : MonoBehaviour
 #if UNITY_ANDROID
             //restartButton.gameObject.SetActive(true);
 #else
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.Alpha0))
             {
                 RestartScene();
             }
@@ -142,6 +143,43 @@ public class GameController : MonoBehaviour
         ShopController.instance.GainPoints(amountOfPoints);
 
         TimeController.instance.bTimerTicking = false;
+    }
+
+    public InputField inputField;
+    public Text cheatCodeText;
+    public string cheatString = "Lordmatics";
+    public string maxSpeed = "Speed";
+    public string maxFireRate = "FireRate";
+    public string maxPower = "Power";
+    public string maxCannon = "CannonTier";
+
+    public void OnCheatCodeEnd()
+    {
+        if(cheatCodeText.text == cheatString)
+        {
+            Destroy(inputField.gameObject);
+            ShopController.instance.MaxStats();
+        }
+        else if(cheatCodeText.text == maxSpeed)
+        {
+            Destroy(inputField.gameObject);
+            ShopController.instance.MaxMoveSpeed();
+        }
+        else if (cheatCodeText.text == maxFireRate)
+        {
+            Destroy(inputField.gameObject);
+            ShopController.instance.MaxFireRate();
+        }
+        else if (cheatCodeText.text == maxPower)
+        {
+            Destroy(inputField.gameObject);
+            ShopController.instance.MaxPower();
+        }
+        else if (cheatCodeText.text == maxCannon)
+        {
+            Destroy(inputField.gameObject);
+            ShopController.instance.MaxCannon();
+        }
     }
 }
 

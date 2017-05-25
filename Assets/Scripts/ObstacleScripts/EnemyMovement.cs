@@ -86,7 +86,7 @@ public class EnemyMovement : MonoBehaviour, ICanExceedBounds, IContactDestroyabl
         {
             if(laser.type == LaserBolt.FriendOrFoe.Friendly && !healthScript.bIsDead)
             {
-                if(healthScript.TakeDamage(player.GetTurretData().power))
+                if(healthScript.TakeDamage(laser.powerLevel))
                 {
                     Instantiate(Resources.Load(ParticleLibrary.enemyExplosion), transform.position, transform.rotation);
                     // Done in laser class

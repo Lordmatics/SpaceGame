@@ -22,6 +22,8 @@ public class LaserBolt : MonoBehaviour , ICanExceedBounds, IContactDestroyable
     // Custom Data Structures
     public PlayerMovementData movementData = new PlayerMovementData();
 
+    public int powerLevel = 1;
+
     void Start()
     {
         laserRB = GetComponent<Rigidbody>();

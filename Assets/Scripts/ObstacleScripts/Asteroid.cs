@@ -59,7 +59,7 @@ public class Asteroid : MonoBehaviour, ICanExceedBounds, IContactDestroyable
         {
             if(laserBolt.type == LaserBolt.FriendOrFoe.Friendly && !healthScript.bIsDead)
             {
-                if(healthScript.TakeDamage(player.GetTurretData().power))
+                if(healthScript.TakeDamage(laserBolt.powerLevel))
                 {
                     //Value script = GetComponent<Value>();
                     //ExpController.instance.GainExperience(script.ExpValue);
